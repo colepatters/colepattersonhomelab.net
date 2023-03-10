@@ -11,7 +11,6 @@ with:
 registry: ghcr.io
 username: colepatters
 password: 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
-- name: Build the hello-docker Docker image
 run: |
        docker build . --tag ghcr.io/colepatters/colepattersonhomelab.net:latest
        docker run ghcr.io/colepatters/colepattersonhomelab.net:latest
