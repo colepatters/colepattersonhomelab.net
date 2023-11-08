@@ -1,30 +1,60 @@
-import { useState } from 'react'
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
+
+import { QueryClient, QueryClientProvider } from "react-query";
+const queryClient = new QueryClient()
+
+const firebaseConfig = {
+  apiKey: "AIzaSyANxDvimkrwvx-iI92wdDtiQQcfo_YAGac",
+  authDomain: "colepattersonhomelab.firebaseapp.com",
+  projectId: "colepattersonhomelab",
+  storageBucket: "colepattersonhomelab.appspot.com",
+  messagingSenderId: "179926383053",
+  appId: "1:179926383053:web:287b3ba5c5f18be39dac84",
+  measurementId: "G-KBMN6VHX5B"
+};
+
+const firebaseApp = initializeApp(firebaseConfig);
+const firestore = getFirestore(firebaseApp);
+
 import NavBar from './NavBar'
+import Games from './Games'
 
-function App() {
-  const [count, setCount] = useState(0)
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Outlet
+} from "react-router-dom";
 
+function Root() {
+  
   return (
     <>
       <NavBar />
-      <div style={{ 
-        paddingLeft: "10px", 
-        paddingTop : "10px"
-        }}>
-        <p>not much to do here... yet</p>
-      </div>
+      <Outlet />
+    </>
+  )
+}
 
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Root />,
+    children: [
+      {
+        path: 'games',
+        element: <Games firestore={firestore}/>
+      }
+    ]
+  },
+]);
 
-      <div className="d-flex">
-        <div className='fixed-bottom align-self-end'>
-          <img
-            src="https://media.tenor.com/5_cyuCBsmNkAAAAi/pizza-tower-cool.gif"
-            alt="cool pineapple guy dancing"
-            width={200}
-            style={{ float: "right"}}
-            />
-        </div>
-      </div>
+function App() {
+  return (
+    <>
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+      </QueryClientProvider>
     </>
   )
 }
