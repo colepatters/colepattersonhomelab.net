@@ -15,6 +15,12 @@ function NavBar() {
                             <li className="nav-item">
                                 <a className="nav-link" href="/games">My Games</a>
                             </li>
+                            <li className="nav-item">
+                                <a className="nav-link" href="/pages">Pages</a>
+                            </li>
+                            <li className="nav-item">
+                                <a className="nav-link" href="/about">About Me</a>
+                            </li>
                         </ul>
                     </div>
                     

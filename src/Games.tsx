@@ -17,7 +17,6 @@ export default function Games({firestore} : {firestore: Firestore}) {
     async function getData() {
         const snapshot = await getDocs(collection(firestore, 'games'))
 
-        
         let games: Array<GameEntry> = []
         snapshot.forEach(async (doc) => {
             games.push(doc.data() as GameEntry)

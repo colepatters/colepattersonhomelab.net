@@ -25,6 +25,8 @@ import {
   RouterProvider,
   Outlet
 } from "react-router-dom";
+import PagesOverview from "./PagesOverview";
+import About from "./About";
 
 function Root() {
   
@@ -44,6 +46,14 @@ const router = createBrowserRouter([
       {
         path: 'games',
         element: <Games firestore={firestore}/>
+      },
+      {
+        path: 'pages/*',
+        element: <PagesOverview firestore={firestore} />
+      },
+      {
+        path: 'about',
+        element: <About />
       }
     ]
   },
