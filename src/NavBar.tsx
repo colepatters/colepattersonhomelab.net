@@ -10,9 +10,6 @@ function NavBar() {
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                             <li className="nav-item">
-                                <a className="nav-link" href="https://www.linkedin.com/in/colepatterson4342/" target='_blank'>LinkedIn</a>
-                            </li>
-                            <li className="nav-item">
                                 <a className="nav-link" href="/games">My Games</a>
                             </li>
                             <li className="nav-item">
