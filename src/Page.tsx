@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Firestore, doc, getDoc } from "firebase/firestore";
-import Markdown from "react-markdown"
+import Markdown from "markdown-to-jsx"
 import remarkGfm from 'remark-gfm'
+import { Image } from "react-bootstrap";
 
 export default function Page({firestore} : {firestore: Firestore}) {
     let params = useParams();
@@ -41,10 +42,25 @@ export default function Page({firestore} : {firestore: Firestore}) {
         getData()
     }, [params, Object.keys(pageContent).length == 0])
 
+    function getImageComponent(props) {
+
+        return (
+            <Image fluid src={props.src} />
+        )
+    }
+
     function getMarkdownContentComponent() {
         const markdown = pageContent.markdown.join('\n')
 
-        return <Markdown>{markdown}</Markdown>
+        return <Markdown
+                options={{
+                    overrides: {
+                        img: {
+                            component: getImageComponent
+                        }
+                    }
+                }}
+                >{markdown}</Markdown>
     }
     
     if (isLoadingPageContent || Object.entries(pageContent).length == 0) {
