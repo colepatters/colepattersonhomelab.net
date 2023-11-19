@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { Firestore, doc, getDoc } from "firebase/firestore";
 import Markdown from "markdown-to-jsx"
 import remarkGfm from 'remark-gfm'
-import { Image } from "react-bootstrap";
+import { Image, Modal, Button } from "react-bootstrap";
 
 export default function Page({firestore} : {firestore: Firestore}) {
     let params = useParams();
@@ -11,6 +11,9 @@ export default function Page({firestore} : {firestore: Firestore}) {
     const [isLoadingPageContent, setIsLoadingPageContent] = useState(false)
     const [showPageContentLoadError, setShowPageContentLoadError] = useState(false)
     const [pageContent, setPageContent] = useState({} as {id: string, title: string, markdown: Array<string>})
+
+    const [showImageModal, setShowImageModal] = useState(false)
+    const [imageModalSource, setImageModalSource] = useState("")
 
     async function getData() {
         setIsLoadingPageContent(true)
@@ -42,10 +45,15 @@ export default function Page({firestore} : {firestore: Firestore}) {
         getData()
     }, [params, Object.keys(pageContent).length == 0])
 
+    function handleShowImageModal(src: string) {
+        setImageModalSource(src)
+        setShowImageModal(true)
+    }
+
     function getImageComponent(props) {
 
         return (
-            <Image fluid src={props.src} />
+            <Image fluid src={props.src} onClick={() => handleShowImageModal(props.src)} />
         )
     }
 
@@ -71,6 +79,19 @@ export default function Page({firestore} : {firestore: Firestore}) {
 
     return (
         <>
+            <Modal show={showImageModal} onHide={() => setShowImageModal(false)} size="xl">
+                <Modal.Header closeButton>
+                    <Modal.Title>Image</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Image fluid src={imageModalSource} />
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button href={imageModalSource} target="_blank">Open in new tab</Button>
+                    <Button onClick={() => setShowImageModal(false)}>Close</Button>
+                </Modal.Footer>
+            </Modal>
+
             <div className="px-1 d-flex justify-content-center" style={{backgroundColor: ''}}>
                 <div className="pt-4" style={{maxWidth: '900px', backgroundColor: ''}}>
                     <div>
