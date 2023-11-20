@@ -53,7 +53,18 @@ export default function Page({firestore} : {firestore: Firestore}) {
     function getImageComponent(props) {
 
         return (
-            <Image fluid src={props.src} onClick={() => handleShowImageModal(props.src)} />
+            <div className="d-flex" style={{backgroundColor: 'red'}}>
+                <div className="p-2">
+                    <Image fluid src={props.src} onClick={() => handleShowImageModal(props.src)} />
+                </div>
+            </div>
+        )
+    }
+
+    function getLinkComponent(props) {
+
+        return (
+            <a href={props.href} target="_blank">{props.children[0]}</a>
         )
     }
 
@@ -65,6 +76,9 @@ export default function Page({firestore} : {firestore: Firestore}) {
                     overrides: {
                         img: {
                             component: getImageComponent
+                        },
+                        a: {
+                            component: getLinkComponent
                         }
                     }
                 }}
@@ -97,7 +111,7 @@ export default function Page({firestore} : {firestore: Firestore}) {
                     <div>
                         <h1>{pageContent.title}</h1>
                     </div>
-                    <div className="py-2" id="md-root" >
+                    <div className="py-2" id="md-root">
                         {getMarkdownContentComponent()}
                     </div>
                 </div>
